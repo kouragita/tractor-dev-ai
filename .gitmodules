@@ -1,12 +1,12 @@
 [submodule "web_ui"]
 	path = web_ui
-	url = https://github.com/open-webui/open-webui
+	url = git@github.com:kouragita/open-webui.git
 [submodule "llm_llama"]
 	path = llm_llama
-	url = https://github.com/ggerganov/llama.cpp
+	url = git@github.com:kouragita/llama.cpp.git
 [submodule "stt_whisper"]
 	path = stt_whisper
-	url = https://github.com/ggerganov/whisper.cpp
+	url = git@github.com:kouragita/whisper.cpp.git
 [submodule "tts_coqui"]
 	path = tts_coqui
-	url = https://github.com/coqui-ai/TTS
+	url = git@github.com:kouragita/TTS.git
