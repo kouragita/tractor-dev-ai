@@ -1,0 +1,12 @@
+[submodule "web_ui"]
+	path = web_ui
+	url = https://github.com/open-webui/open-webui
+[submodule "llm_llama"]
+	path = llm_llama
+	url = https://github.com/ggerganov/llama.cpp
+[submodule "stt_whisper"]
+	path = stt_whisper
+	url = https://github.com/ggerganov/whisper.cpp
+[submodule "tts_coqui"]
+	path = tts_coqui
+	url = https://github.com/coqui-ai/TTS
