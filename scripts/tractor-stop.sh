@@ -1,18 +1,28 @@
 #!/usr/bin/env bash
-# Stop Docker compose and local services.
+# Stop Ollama, WebUI, or both (default = all)
+
 set -e
+SERVICE=${1:-all}
 ROOT="$HOME/tractor-dev-ai"
-cd "$ROOT/web_ui"
 
-echo "Stopping docker-compose services..."
-docker compose down
-
-# Try killing local uvicorn if started with the pattern above
-PIDS=$(pgrep -f "uvicorn api_server.main")
-if [ -n "$PIDS" ]; then
-  echo "Stopping local FastAPI (pid(s): $PIDS)"
-  kill $PIDS || true
-fi
-
-echo "Stopped services."
-docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+case "$SERVICE" in
+  ollama)
+    echo "Stopping Ollama..."
+    docker stop ollama || true
+    docker rm ollama || true
+    ;;
+  webui)
+    echo "Stopping OpenWebUI..."
+    docker stop open-webui || true
+    docker rm open-webui || true
+    ;;
+  all)
+    echo "Stopping all services..."
+    docker stop ollama open-webui || true
+    docker rm ollama open-webui || true
+    ;;
+  *)
+    echo "Usage: $0 [ollama|webui|all]"
+    exit 1
+    ;;
+esac

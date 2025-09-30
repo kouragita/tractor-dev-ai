@@ -1,14 +1,26 @@
 #!/usr/bin/env bash
-ROOT="$HOME/tractor-dev-ai"
-echo "Docker containers:"
-docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.CPUPerc}}\t{{.MemUsage}}"
+# Show status of Ollama, WebUI, or both (default = all)
 
-echo ""
-if [ -d "$ROOT/api_server" ]; then
-  echo "FastAPI process (if running):"
-  ps aux | grep uvicorn | grep -v grep || echo "No uvicorn process found"
-fi
+set -e
+SERVICE=${1:-all}
 
-echo ""
-echo "Disk usage (project):"
-du -sh "$ROOT" || true
+echo "Checking container status..."
+
+case "$SERVICE" in
+  ollama)
+    docker ps -a --filter "name=ollama" \
+      --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+    ;;
+  webui)
+    docker ps -a --filter "name=open-webui" \
+      --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+    ;;
+  all)
+    docker ps -a --filter "name=ollama" --filter "name=open-webui" \
+      --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
+    ;;
+  *)
+    echo "Usage: $0 [ollama|webui|all]"
+    exit 1
+    ;;
+esac
