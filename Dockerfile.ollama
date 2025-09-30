@@ -2,14 +2,14 @@ FROM ollama/ollama:latest
 
 WORKDIR /models
 
-# Copy model + modelfile into image
-COPY ./llm_llama/models/mistral-7b-instruct-v0.2.Q4_K_M.gguf /models/
+# Copy only the Modelfile (not the .gguf)
 COPY ./llm_llama/models/Modelfile /models/Modelfile
 
-# Copy entrypoint script
+# Copy entrypoint script from repo root
 COPY ./entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 EXPOSE 11434
 
 ENTRYPOINT ["/entrypoint.sh"]
+
